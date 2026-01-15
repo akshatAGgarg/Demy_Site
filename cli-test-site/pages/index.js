@@ -23,7 +23,7 @@ export default function Home() {
                 <p style={{ color: '#94a3b8', fontSize: '18px' }}>
                     You have successfully logged into your premium dashboard.
                 </p>
-                <button className="btn btn-logout" onClick={handleLogout}>
+                <button className="btn btn-logout-1" onClick={handleLogout}>
                     Logout
                 </button>
             </div>
