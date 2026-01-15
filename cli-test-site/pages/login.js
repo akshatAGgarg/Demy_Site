@@ -21,7 +21,7 @@ export default function Login() {
             <div className="glass-card">
                 <h2>Welcome Back</h2>
                 <form onSubmit={handleLogin}>
-                    <div className="input-group">
+                    <div className="input-group-1">
                         <label>Email Address</label>
                         <input
                             type="email"
@@ -31,7 +31,7 @@ export default function Login() {
                             required
                         />
                     </div>
-                    <div className="input-group">
+                    <div className="input-group-2">
                         <label>Password</label>
                         <input
                             type="password"
