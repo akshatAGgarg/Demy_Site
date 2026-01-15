@@ -1,49 +1,43 @@
-import { useState } from 'react';
-import styles from '../styles/Home.module.css';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 export default function Home() {
-    const [command, setCommand] = useState('');
-    const [output, setOutput] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+    const router = useRouter();
 
-    const runTest = async () => {
-        setLoading(true);
-        setError('');
-        setOutput('');
-        try {
-            const res = await fetch('/api/test', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ command })
-            });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.error || 'Server error');
-            setOutput(data.result);
-        } catch (e) {
-            setError(e.message);
-        } finally {
-            setLoading(false);
+    useEffect(() => {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (!isLoggedIn) {
+            router.push('/login');
         }
+    }, [router]);
+
+    const handleLogout = () => {
+        localStorage.removeItem('isLoggedIn');
+        router.push('/login');
     };
 
     return (
-        <main className={styles.main}>
-            <h1 className={styles.title}>CLI Test Interface</h1>
-            <textarea
-                className={styles.textarea}
-                rows={4}
-                placeholder="Enter command / parameters for your CLI"
-                value={command}
-                onChange={e => setCommand(e.target.value)}
-            />
-            <button className={styles.button} onClick={runTest} disabled={loading}>
-                {loading ? 'Running…' : 'Run Test'}
-            </button>
-            {error && <p className={styles.error}>Error: {error}</p>}
-            {output && (
-                <pre className={styles.output}><code>{output}</code></pre>
-            )}
-        </main>
+        <div className="home-layout">
+            <div className="welcome-section">
+                <h1 className="hero-title">Welcome Home</h1>
+                <p style={{ color: '#94a3b8', fontSize: '18px' }}>
+                    You have successfully logged into your premium dashboard.
+                </p>
+                <button className="btn btn-logout" onClick={handleLogout}>
+                    Logout
+                </button>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginTop: '60px' }}>
+                <div className="glass-card" style={{ maxWidth: 'none' }}>
+                    <h3>Profile Overview</h3>
+                    <p style={{ marginTop: '10px', color: '#94a3b8' }}>Securely managed by your new Auth flow.</p>
+                </div>
+                <div className="glass-card" style={{ maxWidth: 'none', borderLeft: '1px solid var(--secondary-glow)' }}>
+                    <h3>Activity Feed</h3>
+                    <p style={{ marginTop: '10px', color: '#94a3b8' }}>Real-time updates appearing here.</p>
+                </div>
+            </div>
+        </div>
     );
 }
