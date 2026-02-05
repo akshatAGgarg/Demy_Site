@@ -17,7 +17,7 @@ export default function Home() {
     };
 
     return (
-        <div className="home-layout">
+        <div className="homepage-layout">
             <div className="welcome-section">
                 <h1 className="hero-title">Welcome Home</h1>
                 <p style={{ color: '#94a3b8', fontSize: '18px' }}>
